@@ -1,9 +1,8 @@
 package com.medical.solution.repository;
 
-import com.medical.solution.entity.MAttribute;
-import com.medical.solution.repository.i.MAttributeRepository;
-import com.medical.solution.repository.mapper.MAttrGroupMapper;
-import com.medical.solution.repository.mapper.MAttributeMapper;
+import com.medical.solution.entity.Attribute;
+import com.medical.solution.repository.i.AttributeRepository;
+import com.medical.solution.repository.mapper.AttributeMapper;
 import com.medical.solution.utils.DBHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +15,7 @@ import java.sql.PreparedStatement;
 
 
 @Repository
-public class MAttributeRepositoryImpl extends AbstractRepositoryImpl<MAttribute> implements MAttributeRepository {
+public class AttributeRepositoryImpl extends AbstractRepositoryImpl<Attribute> implements AttributeRepository {
 
     private final static String FIND_ALL_SQL = "SELECT * FROM m_attributes";
     private final static String FIND_BY_ID_SQL = "SELECT * FROM m_attributes WHERE attr_id=?";
@@ -25,17 +24,17 @@ public class MAttributeRepositoryImpl extends AbstractRepositoryImpl<MAttribute>
     private final static String DELETE_SQL = "DELETE FROM m_attributes WHERE attr_id = ?";
 
     @Autowired
-    public MAttributeRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public AttributeRepositoryImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
 
     @Override
-    public MAttribute findById(long id) {
-        return getJdbcTemplate().queryForObject(FIND_BY_ID_SQL, new Object[]{id}, new MAttributeMapper());
+    public Attribute findById(long id) {
+        return getJdbcTemplate().queryForObject(FIND_BY_ID_SQL, new Object[]{id}, new AttributeMapper());
     }
 
     @Override
-    public MAttribute create(MAttribute attr) {
+    public Attribute create(Attribute attr) {
         attr.setAttrId(DBHelper.getId());
         KeyHolder holder = new GeneratedKeyHolder();
         getJdbcTemplate().update(connection -> {
@@ -51,7 +50,7 @@ public class MAttributeRepositoryImpl extends AbstractRepositoryImpl<MAttribute>
     }
 
     @Override
-    public MAttribute update(MAttribute attr) {
+    public Attribute update(Attribute attr) {
         KeyHolder holder = new GeneratedKeyHolder();
         getJdbcTemplate().update(connection -> {
             PreparedStatement ps = connection.prepareStatement(UPDATE_SQL);
@@ -77,6 +76,6 @@ public class MAttributeRepositoryImpl extends AbstractRepositoryImpl<MAttribute>
 
     @Override
     public RowMapper getRowMapper() {
-        return new MAttributeMapper();
+        return new AttributeMapper();
     }
 }

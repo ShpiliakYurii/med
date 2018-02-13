@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ObjectTypesListComponent } from './object-types-list.component';
+import { ConfigToolComponent } from './config-tool.component';
 
-describe('ObjectTypesListComponent', () => {
-  let component: ObjectTypesListComponent;
-  let fixture: ComponentFixture<ObjectTypesListComponent>;
+describe('ConfigToolComponent', () => {
+  let component: ConfigToolComponent;
+  let fixture: ComponentFixture<ConfigToolComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ObjectTypesListComponent ]
+      declarations: [ ConfigToolComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ObjectTypesListComponent);
+    fixture = TestBed.createComponent(ConfigToolComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

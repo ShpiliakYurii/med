@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MObjectType implements Serializable {
+public class ObjectType implements Serializable {
 
     @JsonSerialize(using = LongToStringSerializer.class)
     @JsonDeserialize(using = StringToLongDeserializer.class)
@@ -19,12 +19,12 @@ public class MObjectType implements Serializable {
     @JsonDeserialize(using = StringToLongDeserializer.class)
     private Long parentId;
 
-    private List<MObjectType> childes;
+    private List<ObjectType> childes;
 
-    public MObjectType() {
+    public ObjectType() {
     }
 
-    public MObjectType(Long objectTypeId, String name, Long parentId) {
+    public ObjectType(Long objectTypeId, String name, Long parentId) {
         this.objectTypeId = objectTypeId;
         this.name = name;
         this.parentId = parentId;
@@ -55,11 +55,11 @@ public class MObjectType implements Serializable {
         this.parentId = parentId;
     }
 
-    public List<MObjectType> getChildes() {
+    public List<ObjectType> getChildes() {
         return childes;
     }
 
-    public void setChildes(List<MObjectType> childes) {
+    public void setChildes(List<ObjectType> childes) {
         this.childes = childes;
     }
 }

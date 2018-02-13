@@ -1,7 +1,7 @@
 package com.medical.solution.service;
 
-import com.medical.solution.entity.MAttrGroup;
-import com.medical.solution.repository.i.MAttrGroupRepository;
+import com.medical.solution.entity.AttrGroup;
+import com.medical.solution.repository.i.AttrGroupRepository;
 import com.medical.solution.service.i.AttrGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,35 +11,35 @@ import java.util.List;
 @Service
 public class AttrGroupServiceImpl implements AttrGroupService {
 
-    private MAttrGroupRepository mAttrGroupRepository;
+    private AttrGroupRepository attrGroupRepository;
 
     @Autowired
-    public AttrGroupServiceImpl(MAttrGroupRepository mAttrGroupRepository) {
-        this.mAttrGroupRepository = mAttrGroupRepository;
+    public AttrGroupServiceImpl(AttrGroupRepository attrGroupRepository) {
+        this.attrGroupRepository = attrGroupRepository;
     }
 
     @Override
-    public MAttrGroup add(MAttrGroup o) {
-        return mAttrGroupRepository.create(o);
+    public AttrGroup add(AttrGroup o) {
+        return attrGroupRepository.create(o);
     }
 
     @Override
-    public MAttrGroup update(MAttrGroup o) {
-        return mAttrGroupRepository.update(o);
+    public AttrGroup update(AttrGroup o) {
+        return attrGroupRepository.update(o);
     }
 
     @Override
-    public MAttrGroup getById(long id) {
-        return mAttrGroupRepository.findById(id);
+    public AttrGroup getById(long id) {
+        return attrGroupRepository.findById(id);
     }
 
     @Override
     public void delete(long id) {
-        mAttrGroupRepository.delete(id);
+        attrGroupRepository.delete(id);
     }
 
     @Override
-    public List<MAttrGroup> getAll() {
-        return mAttrGroupRepository.findAll();
+    public List<AttrGroup> getAll() {
+        return attrGroupRepository.findAll();
     }
 }

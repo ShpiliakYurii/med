@@ -24,7 +24,7 @@ public abstract class AbstractRepositoryImpl<T> implements AbstractRepository<T>
     }
 
 //    @Override
-    public void delete(long id) {
+    public void delete(long id) throws NoSuchMethodException {
         getJdbcTemplate().update(connection -> {
             PreparedStatement ps = connection.prepareStatement(getDeleteQuery());
             ps.setLong(1, id);
@@ -37,15 +37,9 @@ public abstract class AbstractRepositoryImpl<T> implements AbstractRepository<T>
         return getJdbcTemplate().query(getFindAllQuery(), getRowMapper());
     }
 
-    public String getDeleteQuery(){
-        return "";
-    }
+    public abstract String getDeleteQuery();
 
-    public String getFindAllQuery() {
-        return "";
-    }
+    public abstract String getFindAllQuery();
 
-    public RowMapper getRowMapper(){
-        return null;
-    }
+    public abstract RowMapper getRowMapper();
 }

@@ -1,8 +1,8 @@
 package com.medical.solution.repository;
 
-import com.medical.solution.entity.MObjectType;
-import com.medical.solution.repository.i.MObjectTypesRepository;
-import com.medical.solution.repository.mapper.MObjectTypesRowMapper;
+import com.medical.solution.entity.ObjectType;
+import com.medical.solution.repository.i.ObjectTypesRepository;
+import com.medical.solution.repository.mapper.ObjectTypesRowMapper;
 import com.medical.solution.utils.DBHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +16,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 
 @Repository
-public class MObjectTypesRepositoryImpl extends AbstractRepositoryImpl<MObjectType> implements MObjectTypesRepository {
+public class ObjectTypesRepositoryImpl extends AbstractRepositoryImpl<ObjectType> implements ObjectTypesRepository {
 
     private final static String FIND_ALL_SQL = "SELECT * FROM m_object_types";
     private final static String FIND_BY_ID_SQL = "SELECT * FROM m_object_types WHERE object_type_id=?";
@@ -27,17 +27,17 @@ public class MObjectTypesRepositoryImpl extends AbstractRepositoryImpl<MObjectTy
 
 
     @Autowired
-    public MObjectTypesRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public ObjectTypesRepositoryImpl(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
 
 
     @Transactional(readOnly = true)
-    public MObjectType findById(long objectTypeId) {
-        return getJdbcTemplate().queryForObject(FIND_BY_ID_SQL, new Object[]{objectTypeId}, new MObjectTypesRowMapper());
+    public ObjectType findById(long objectTypeId) {
+        return getJdbcTemplate().queryForObject(FIND_BY_ID_SQL, new Object[]{objectTypeId}, new ObjectTypesRowMapper());
     }
 
-    public MObjectType create(final MObjectType objectType) {
+    public ObjectType create(final ObjectType objectType) {
         objectType.setObjectTypeId(DBHelper.getId());
         KeyHolder holder = new GeneratedKeyHolder();
         getJdbcTemplate().update(connection -> {
@@ -52,7 +52,7 @@ public class MObjectTypesRepositoryImpl extends AbstractRepositoryImpl<MObjectTy
     }
 
     @Override
-    public MObjectType update(MObjectType objectType) {
+    public ObjectType update(ObjectType objectType) {
         KeyHolder holder = new GeneratedKeyHolder();
         getJdbcTemplate().update(connection -> {
             PreparedStatement ps = connection.prepareStatement(UPDATE_SQL);
@@ -66,8 +66,8 @@ public class MObjectTypesRepositoryImpl extends AbstractRepositoryImpl<MObjectTy
     }
 
 
-    public List<MObjectType> findAllByParentId(Long parentId) {
-        return getJdbcTemplate().query(FIND__ALL_BY_PARENT_ID_SQL, new Object[]{parentId}, new MObjectTypesRowMapper());
+    public List<ObjectType> findAllByParentId(Long parentId) {
+        return getJdbcTemplate().query(FIND__ALL_BY_PARENT_ID_SQL, new Object[]{parentId}, new ObjectTypesRowMapper());
     }
 
     @Override
@@ -82,7 +82,7 @@ public class MObjectTypesRepositoryImpl extends AbstractRepositoryImpl<MObjectTy
 
     @Override
     public RowMapper getRowMapper() {
-        return new MObjectTypesRowMapper();
+        return new ObjectTypesRowMapper();
     }
 
 }

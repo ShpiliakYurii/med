@@ -1,8 +1,8 @@
 package com.medical.solution.service;
 
 import com.medical.solution.constants.DatabaseConstants;
-import com.medical.solution.entity.MObjectType;
-import com.medical.solution.repository.i.MObjectTypesRepository;
+import com.medical.solution.entity.ObjectType;
+import com.medical.solution.repository.i.ObjectTypesRepository;
 import com.medical.solution.service.i.ObjectTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,47 +12,47 @@ import java.util.List;
 @Service
 public class ObjectTypeServiceImpl implements ObjectTypeService {
 
-    private MObjectTypesRepository mObjectTypesRepository;
+    private ObjectTypesRepository objectTypesRepository;
 
     @Autowired
-    public ObjectTypeServiceImpl(MObjectTypesRepository mObjectTypesRepository) {
-        this.mObjectTypesRepository = mObjectTypesRepository;
+    public ObjectTypeServiceImpl(ObjectTypesRepository objectTypesRepository) {
+        this.objectTypesRepository = objectTypesRepository;
     }
 
     @Override
-    public MObjectType add(MObjectType mObjectType) {
-        return mObjectTypesRepository.create(mObjectType);
+    public ObjectType add(ObjectType objectType) {
+        return objectTypesRepository.create(objectType);
     }
 
     @Override
-    public MObjectType update(MObjectType mObjectType) {
-        return mObjectTypesRepository.update(mObjectType);
+    public ObjectType update(ObjectType objectType) {
+        return objectTypesRepository.update(objectType);
     }
 
     @Override
-    public MObjectType getById(long id) {
-        return mObjectTypesRepository.findById(id);
+    public ObjectType getById(long id) {
+        return objectTypesRepository.findById(id);
     }
 
     @Override
     public void delete(long id) {
-        mObjectTypesRepository.delete(id);
+        objectTypesRepository.delete(id);
     }
 
     @Override
-    public List<MObjectType> getAll() {
-        return mObjectTypesRepository.findAll();
+    public List<ObjectType> getAll() {
+        return objectTypesRepository.findAll();
     }
 
     @Override
-    public MObjectType getAllHierarchy() {
-        MObjectType root = mObjectTypesRepository.findById(DatabaseConstants.ROOT);
+    public ObjectType getAllHierarchy() {
+        ObjectType root = objectTypesRepository.findById(DatabaseConstants.ROOT);
         getChildesHierarchy(root);
         return root;
     }
 
-    private void getChildesHierarchy(MObjectType root) {
-        root.setChildes(mObjectTypesRepository.findAllByParentId(root.getObjectTypeId()));
+    private void getChildesHierarchy(ObjectType root) {
+        root.setChildes(objectTypesRepository.findAllByParentId(root.getObjectTypeId()));
         root.getChildes().forEach(this::getChildesHierarchy);
     }
 

@@ -1,6 +1,6 @@
 package com.medical.solution.controller;
 
-import com.medical.solution.entity.MAttribute;
+import com.medical.solution.entity.Attribute;
 import com.medical.solution.service.i.AttributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +19,14 @@ public class AttributeController {
     }
 
     @PutMapping
-    public ResponseEntity<?> add(@RequestBody MAttribute attr) {
-        MAttribute res = attributeService.add(attr);
+    public ResponseEntity<?> add(@RequestBody Attribute attr) {
+        Attribute res = attributeService.add(attr);
         return new ResponseEntity<Object>(res, HttpStatus.CREATED);
     }
 
     @PostMapping
-    public ResponseEntity<?> update(@RequestBody MAttribute attr) {
-        MAttribute res = attributeService.update(attr);
+    public ResponseEntity<?> update(@RequestBody Attribute attr) {
+        Attribute res = attributeService.update(attr);
         return new ResponseEntity<Object>(res, HttpStatus.OK);
     }
 
@@ -36,7 +36,7 @@ public class AttributeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") long id) throws NoSuchMethodException {
         attributeService.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

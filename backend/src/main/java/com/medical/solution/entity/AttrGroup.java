@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MAttrGroup implements Serializable {
+public class AttrGroup implements Serializable {
 
     @JsonSerialize(using = LongToStringSerializer.class)
     @JsonDeserialize(using = StringToLongDeserializer.class)
@@ -19,16 +19,16 @@ public class MAttrGroup implements Serializable {
 
     private String subgroup;
 
-    private List<MAttribute> attributes;
+    private List<Attribute> attributes;
 
-    public MAttrGroup(Long attrGroupId, String name, String subgroup) {
+    public AttrGroup(Long attrGroupId, String name, String subgroup) {
         this.attrGroupId = attrGroupId;
         this.name = name;
         this.subgroup = subgroup;
         this.attributes = new ArrayList<>();
     }
 
-    public MAttrGroup() {
+    public AttrGroup() {
         this.attributes = new ArrayList<>();
     }
 
@@ -56,11 +56,11 @@ public class MAttrGroup implements Serializable {
         this.subgroup = subgroup;
     }
 
-    public List<MAttribute> getAttributes() {
+    public List<Attribute> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(List<MAttribute> attributes) {
+    public void setAttributes(List<Attribute> attributes) {
         this.attributes = attributes;
     }
 }

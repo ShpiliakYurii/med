@@ -3,33 +3,44 @@ import {ObjectTypesService} from "../shared/object-types/object-types.service";
 import {AddObjectTypeDialog} from "./add-object-type-dialog/add-object-type-dialog";
 import {MatDialog} from "@angular/material";
 import {UpdateObjectTypeDialog} from "./update-object-type-dialog/update-object-type-dialog";
+import {AddAttrGroupDialog} from "./add-attr-group-dialog/add-attr-group-dialog";
+import {AttrGroupsService} from "../shared/attr-groups/attr-groups.service";
 
 @Component({
   selector: 'app-object-types-list',
-  templateUrl: './object-types-list.component.html',
-  styleUrls: ['./object-types-list.component.css']
+  templateUrl: './config-tool.html',
+  styleUrls: ['./config-tool.css']
 })
-export class ObjectTypesListComponent implements OnInit {
+export class ConfigToolComponent implements OnInit {
 
+  //VARIABLES BLOCK START
   rootObjectType: Array<any>;
+  attrGroups: Array<any>;
   selectedObjectType: any;
+  attrGroupForAdding: any = {name: '', attrGroupId: undefined, subgroup: ''};
 
-  constructor(private objectTypesService: ObjectTypesService, public dialog: MatDialog) {
+  //VARIABLES BLOCK END
+
+  constructor(private objectTypesService: ObjectTypesService, private attrGroupsService: AttrGroupsService,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.objectTypesService.getAll().subscribe(data => {
       this.rootObjectType = data;
       this.selectedObjectType = this.rootObjectType;
+    });
+
+    this.attrGroupsService.getAll().subscribe(data => {
+      this.attrGroups = data;
     })
   }
 
-  get self(): ObjectTypesListComponent {
+  get self(): ConfigToolComponent {
     return this;
   }
 
   openNewDialog(): void {
-    console.log(this.selectedObjectType);
     let objectType: any = {name: '', parentId: undefined, objectTypeId: undefined};
     let dialogRef = this.dialog.open(AddObjectTypeDialog, {
       width: '250px',
@@ -40,10 +51,25 @@ export class ObjectTypesListComponent implements OnInit {
       objectType = data;
       if (objectType && objectType.name) {
         objectType.parentId = this.selectedObjectType.objectTypeId;
-        console.log('The dialog was closed');
         this.objectTypesService.add(objectType).subscribe(data => {
-          console.log(data);
           this.selectedObjectType.childes.push(data);
+        });
+      }
+    });
+  }
+
+  openNewAttrGroupDialog(): void {
+    let dialogRef = this.dialog.open(AddAttrGroupDialog, {
+      width: '250px',
+      data: {attrGroup: this.attrGroupForAdding}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (this.attrGroupForAdding.name && this.attrGroupForAdding.subgroup) {
+        console.log(this.attrGroupForAdding);
+        this.attrGroupsService.add(this.attrGroupForAdding).subscribe(data => {
+          this.attrGroups.push(data);
+          this.attrGroupForAdding = {name: '', attrGroupId: undefined, subgroup: ''};
         });
       }
     });
@@ -85,7 +111,7 @@ export class ObjectTypesListComponent implements OnInit {
 @Component({
   selector: 'tree-node',
   templateUrl: 'tree-element.component.html',
-  styleUrls: ['./object-types-list.component.css']
+  styleUrls: ['./config-tool.css']
 })
 export class TreeNode implements OnInit {
   @Input() objectType;
@@ -94,8 +120,8 @@ export class TreeNode implements OnInit {
 
   show: boolean = false;
 
-  private _parent: ObjectTypesListComponent;
-  @Input() set parent(value: ObjectTypesListComponent) {
+  private _parent: ConfigToolComponent;
+  @Input() set parent(value: ConfigToolComponent) {
     this._parent = value;
   }
 

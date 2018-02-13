@@ -1,6 +1,6 @@
 package com.medical.solution.controller;
 
-import com.medical.solution.entity.MAttrGroup;
+import com.medical.solution.entity.AttrGroup;
 import com.medical.solution.service.i.AttrGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,14 +19,14 @@ public class AttrGroupController {
     }
 
     @PutMapping
-    public ResponseEntity<?> add(@RequestBody MAttrGroup attrGroup) {
-        MAttrGroup res = attrGroupService.add(attrGroup);
+    public ResponseEntity<?> add(@RequestBody AttrGroup attrGroup) {
+        AttrGroup res = attrGroupService.add(attrGroup);
         return new ResponseEntity<Object>(res, HttpStatus.CREATED);
     }
 
     @PostMapping
-    public ResponseEntity<?> update(@RequestBody MAttrGroup attrGroup) {
-        MAttrGroup res = attrGroupService.update(attrGroup);
+    public ResponseEntity<?> update(@RequestBody AttrGroup attrGroup) {
+        AttrGroup res = attrGroupService.update(attrGroup);
         return new ResponseEntity<Object>(res, HttpStatus.OK);
     }
 
@@ -36,7 +36,7 @@ public class AttrGroupController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") long id) throws NoSuchMethodException {
         attrGroupService.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

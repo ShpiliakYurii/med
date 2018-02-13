@@ -1,15 +1,11 @@
 package com.medical.solution.controller;
 
-import com.medical.solution.entity.MObjectType;
+import com.medical.solution.entity.ObjectType;
 import com.medical.solution.service.i.ObjectTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/object-type")
@@ -24,14 +20,14 @@ public class ObjectTypeController {
     }
 
     @PutMapping
-    public ResponseEntity<?> add(@RequestBody MObjectType mObjectType) {
-        MObjectType res = objectTypeService.add(mObjectType);
+    public ResponseEntity<?> add(@RequestBody ObjectType objectType) {
+        ObjectType res = objectTypeService.add(objectType);
         return new ResponseEntity<Object>(res, HttpStatus.CREATED);
     }
 
     @PostMapping
-    public ResponseEntity<?> update(@RequestBody MObjectType mObjectType) {
-        MObjectType res = objectTypeService.update(mObjectType);
+    public ResponseEntity<?> update(@RequestBody ObjectType objectType) {
+        ObjectType res = objectTypeService.update(objectType);
         return new ResponseEntity<Object>(res, HttpStatus.OK);
     }
 
@@ -41,7 +37,7 @@ public class ObjectTypeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") long id) {
+    public ResponseEntity<?> delete(@PathVariable("id") long id) throws NoSuchMethodException {
         objectTypeService.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

@@ -7,7 +7,7 @@ import com.medical.solution.serializers.StringToLongDeserializer;
 
 import java.io.Serializable;
 
-public class MAttribute implements Serializable {
+public class Attribute implements Serializable {
 
     @JsonSerialize(using = LongToStringSerializer.class)
     @JsonDeserialize(using = StringToLongDeserializer.class)
@@ -21,10 +21,10 @@ public class MAttribute implements Serializable {
 
     private Integer attrTypeId;
 
-    public MAttribute() {
+    public Attribute() {
     }
 
-    public MAttribute(Long attrId, String name, Long attrGroupId, Integer attrTypeId) {
+    public Attribute(Long attrId, String name, Long attrGroupId, Integer attrTypeId) {
         this.attrId = attrId;
         this.name = name;
         this.attrGroupId = attrGroupId;

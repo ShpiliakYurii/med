@@ -9,9 +9,9 @@ public interface AbstractDataService<T> {
 
     T update(T o);
 
-    T getById(long id);
+    T getById(long id) throws NoSuchMethodException;
 
-    void delete(long id);
+    void delete(long id) throws NoSuchMethodException;
 
     List<T> getAll();
 

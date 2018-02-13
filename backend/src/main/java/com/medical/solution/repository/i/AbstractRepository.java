@@ -6,12 +6,12 @@ public interface AbstractRepository<T> {
 
     List<T> findAll();
 
-    T findById(long id);
+    T findById(long id) throws NoSuchMethodException;
 
     T create(final T object);
 
     T update(final T object);
 
-    void delete(long id);
+    void delete(long id) throws NoSuchMethodException;
 
 }

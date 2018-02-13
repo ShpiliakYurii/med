@@ -1,6 +1,6 @@
 package com.medical.solution.service.i;
 
-import com.medical.solution.entity.MAttrGroup;
+import com.medical.solution.entity.AttrGroup;
 
-public interface AttrGroupService extends AbstractDataService<MAttrGroup> {
+public interface AttrGroupService extends AbstractDataService<AttrGroup> {
 }
