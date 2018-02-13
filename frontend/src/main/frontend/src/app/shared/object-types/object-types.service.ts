@@ -27,6 +27,6 @@ export class ObjectTypesService {
   }
 
   remove(id: number) {
-    return this.http.delete(URL +"/"+ id);
+    return this.http.delete(this.URL +"/"+ id);
   }
 }

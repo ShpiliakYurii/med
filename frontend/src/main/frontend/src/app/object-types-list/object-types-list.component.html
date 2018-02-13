@@ -4,16 +4,16 @@
     <div class="dropdown">
       <button class="dropbtn">Action</button>
       <div class="dropdown-content">
-        <a href="#">New</a>
-        <a href="#">Delete</a>
-        <a href="#">Edit</a>
+        <a (click)="openNewDialog()">New</a>
+        <a (click)="delete()">Delete</a>
+        <a (click)="openEditDialog()">Edit</a>
       </div>
     </div>
   </div>
   <div>
     <tree-node [objectType]="rootObjectType" [parent]="self" [level]="0"></tree-node>
   </div>
-  <button mat-fab color="primary" (click)="openDialog()">Add</button>
+  <!--<button mat-fab color="primary" (click)="openDialog()">Add</button>-->
 </div>
 <!--<mat-card class="attributes-block">-->
   <!--<mat-card-header>Attributes</mat-card-header>-->

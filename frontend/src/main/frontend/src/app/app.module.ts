@@ -14,14 +14,16 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 import {ObjectTypesListComponent, TreeNode} from './object-types-list/object-types-list.component';
 import {AddObjectTypeDialog} from "./object-types-list/add-object-type-dialog/add-object-type-dialog";
+import {UpdateObjectTypeDialog} from "./object-types-list/update-object-type-dialog/update-object-type-dialog";
 
 
 @NgModule({
-  entryComponents: [AddObjectTypeDialog],
+  entryComponents: [AddObjectTypeDialog, UpdateObjectTypeDialog],
   declarations: [
     AppComponent,
     ObjectTypesListComponent,
     AddObjectTypeDialog,
+    UpdateObjectTypeDialog,
     TreeNode
   ],
   imports: [

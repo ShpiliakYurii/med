@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ObjectTypesService} from "../shared/object-types/object-types.service";
 import {AddObjectTypeDialog} from "./add-object-type-dialog/add-object-type-dialog";
 import {MatDialog} from "@angular/material";
+import {UpdateObjectTypeDialog} from "./update-object-type-dialog/update-object-type-dialog";
 
 @Component({
   selector: 'app-object-types-list',
@@ -27,7 +28,7 @@ export class ObjectTypesListComponent implements OnInit {
     return this;
   }
 
-  openDialog(): void {
+  openNewDialog(): void {
     console.log(this.selectedObjectType);
     let objectType: any = {name: '', parentId: undefined, objectTypeId: undefined};
     let dialogRef = this.dialog.open(AddObjectTypeDialog, {
@@ -48,28 +49,45 @@ export class ObjectTypesListComponent implements OnInit {
     });
   }
 
+  openEditDialog(): void {
+    let dialogRef = this.dialog.open(UpdateObjectTypeDialog, {
+      width: '250px',
+      data: {objectType: this.selectedObjectType}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      if (this.selectedObjectType.name) {
+        this.objectTypesService.update(this.selectedObjectType).subscribe(data => {
+        });
+      }
+    });
+  }
+
+  delete(): void {
+    this.objectTypesService.remove(this.selectedObjectType.objectTypeId).subscribe(data => {
+      this.removeObjectTypeFromHierarchy(this.rootObjectType, this.selectedObjectType);
+    });
+  }
+
+  removeObjectTypeFromHierarchy(parent: any, objectType: any): void {
+    parent.childes.forEach((entry, index) => {
+      if (entry.objectTypeId == objectType.objectTypeId) {
+        parent.childes.splice(index, 1);
+        this.selectedObjectType = parent;
+        return;
+      }
+      this.removeObjectTypeFromHierarchy(entry, objectType);
+    });
+  }
+
 }
 
 @Component({
   selector: 'tree-node',
-  template: `
-    <div *ngIf="objectType" (click)="changeSelectedObjectType(objectType)"
-         [ngClass]="{'selected-item': objectType.objectTypeId==_parent.selectedObjectType.objectTypeId}"
-         [ngStyle]="{'padding-left': getLeftPadding()}" (dblclick)="show = !show">
-      <span [hidden]="objectType.childes.length == 0">
-        <span class="pointer" (click)="show = !show" [hidden]="show">+</span>
-        <span class="pointer" (click)="show = !show" [hidden]="!show">-</span>
-      </span>{{objectType.name}}
-    </div>
-    <div *ngIf="objectType" [hidden]="!show">
-      <div *ngFor="let ot of objectType.childes">
-        <tree-node [objectType]="ot" [parent]="_parent" [level]="level + 1"></tree-node>
-      </div>
-    </div>
-  `,
+  templateUrl: 'tree-element.component.html',
   styleUrls: ['./object-types-list.component.css']
 })
-export class TreeNode {
+export class TreeNode implements OnInit {
   @Input() objectType;
   @Input() selectedObjectType;
   @Input() level;
@@ -81,10 +99,6 @@ export class TreeNode {
     this._parent = value;
   }
 
-  get parent(): ObjectTypesListComponent {
-    return this._parent;
-  }
-
   getLeftPadding(): string {
     return this.level * 10 + "px";
   }
@@ -94,11 +108,8 @@ export class TreeNode {
     this._parent.selectedObjectType = ot;
   }
 
-}
+  ngOnInit() {
+    if (this.level == 0) this.show = true;
+  }
 
-// (click)="changeSelectedObjectType(objectType)"
-// <!--<mat-list-item *ngFor="let ot of objectType.childes"-->
-// <!--[ngClass]="{'selected-item': ot.objectTypeId==selectedObjectType.objectTypeId}">-->
-// <!--<tree-node [objectType] = "ot" > </tree-node>-->
-// < !--</mat-list-item>-->
-// </mat-list>
+}

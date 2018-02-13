@@ -8,12 +8,10 @@ public interface AbstractRepository<T> {
 
     T findById(long id);
 
-    T create(final T objectType);
+    T create(final T object);
 
-    T update(final T objectType);
+    T update(final T object);
 
     void delete(long id);
-
-    List<T> findAllByParentId(Long id);
 
 }

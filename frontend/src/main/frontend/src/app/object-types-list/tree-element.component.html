@@ -1,0 +1,13 @@
+<div *ngIf="objectType" (click)="changeSelectedObjectType(objectType)"
+     [ngClass]="{'selected-item': objectType.objectTypeId==_parent.selectedObjectType.objectTypeId}"
+     [ngStyle]="{'padding-left': getLeftPadding()}" (dblclick)="show = !show">
+      <span [hidden]="objectType.childes.length == 0">
+        <span class="pointer" (click)="show = !show" [hidden]="show">+</span>
+        <span class="pointer" (click)="show = !show" [hidden]="!show">-</span>
+      </span>{{objectType.name}}
+</div>
+<div *ngIf="objectType" [hidden]="!show">
+  <div *ngFor="let ot of objectType.childes">
+    <tree-node [objectType]="ot" [parent]="_parent" [level]="level + 1"></tree-node>
+  </div>
+</div>
