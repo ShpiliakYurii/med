@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Add new attr group</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.attrTypeDef.name" placeholder="Name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select [(ngModel)]="data.attrTypeDef.attrTypeId" placeholder="Attr type">
+      <mat-option [value]="4">List</mat-option>
+      <mat-option [value]="5">Reference</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.attrTypeDef" cdkFocusInitial>Add</button>
+</div>

@@ -16,9 +16,41 @@
   <!--<button mat-fab color="primary" (click)="openDialog()">Add</button>-->
 </div>
 <div class="attributes-block">
-  <div class="small-header">
-    <span><b>Attributes</b></span>
-    <a href="#" (click)="openNewAttrGroupDialog()">+ ATTR GROUP</a>
-    <a href="#">+ ATTR</a>
+  <div class="aot">
+    <div class="small-header">
+      <span><b>Attributes</b></span>
+      <a href="#" (click)="openNewAttrGroupDialog()">+ ATTR GROUP</a>
+      <a href="#">+ ATTR</a>
+    </div>
+  </div>
+  <div class="attribute-editing-block">
+    <div>
+      <span>Name:</span>
+      <input [(ngModel)]="selectedAttribute.name">
+    </div>
+    <div>
+      <span>Attr Group:</span>
+      <span [hidden]="!selectedAttributeGroup.name">{{selectedAttributeGroup.name}}(<i>{{selectedAttributeGroup.subgroup}}</i>)</span>
+      <a href="#" (click)="openAttrGroupSearchDialog()">...</a>
+      <a href="#" (click)="openAddAttrTypeDefDialog()">+</a>
+      <!--<select>-->
+        <!--<option *ngFor="let ag of attrGroups" value="{{ag.attrGroupId}}">{{ag.name}}</option>-->
+      <!--</select>-->
+    </div>
+    <div>
+      <span>Type:</span>
+      <select [(ngModel)]="selectedAttribute.attrTypeId">
+        <option value="1">Text</option>
+        <option value="2">Number</option>
+        <option value="3">Date</option>
+        <option value="4">List</option>
+        <option value="5">Reference</option>
+      </select>
+    </div>
+    <div [hidden]="selectedAttribute.attrTypeId != 4 && selectedAttribute.attrTypeId != 5">
+      <span>Attr Type Def:</span>
+      <a href="#" (click)="openAttrTypeDefSearchDialog()">...</a>
+      <a href="#" (click)="openAddAttrTypeDefDialog()">+</a>
+    </div>
   </div>
 </div>

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/attr-group")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -39,5 +41,11 @@ public class AttrGroupController {
     public ResponseEntity<?> delete(@PathVariable("id") long id) throws NoSuchMethodException {
         attrGroupService.delete(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/by-name/{name}")
+    public ResponseEntity<?> getAllByName(@PathVariable("name") String name) {
+        List<AttrGroup> attrGroups = attrGroupService.findAllByName(name);
+        return new ResponseEntity<Object>(attrGroups, HttpStatus.OK);
     }
 }

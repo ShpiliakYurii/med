@@ -30,12 +30,12 @@ public class ObjectTypeServiceImpl implements ObjectTypeService {
     }
 
     @Override
-    public ObjectType getById(long id) {
+    public ObjectType getById(long id) throws NoSuchMethodException {
         return objectTypesRepository.findById(id);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws NoSuchMethodException {
         objectTypesRepository.delete(id);
     }
 
@@ -45,7 +45,7 @@ public class ObjectTypeServiceImpl implements ObjectTypeService {
     }
 
     @Override
-    public ObjectType getAllHierarchy() {
+    public ObjectType getAllHierarchy() throws NoSuchMethodException {
         ObjectType root = objectTypesRepository.findById(DatabaseConstants.ROOT);
         getChildesHierarchy(root);
         return root;

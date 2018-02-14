@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>Select attribute group</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <input matInput [(ngModel)]="nameForSearch" placeholder="Name">
+  </mat-form-field>
+  <button mat-button (click)="selectAttrGroupsByName()">Search</button>
+  <!--<p>Subgroup</p>-->
+  <!--<mat-form-field>-->
+  <!--<input matInput [(ngModel)]="data.attrGroup.subgroup">-->
+  <!--</mat-form-field>-->
+</div>
+<div class="founded-attr-roups-table" [hidden]="foundedAttrGroups.length == 0">
+  <mat-table #table [dataSource]="foundedAttrGroups">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+    <!-- Checkbox Column -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+      </mat-header-cell>
+      <!--<mat-checkbox (change)="$event ? masterToggle() : null"-->
+                      <!--[checked]="selection.hasValue() && isAllSelected()"-->
+                      <!--[indeterminate]="selection.hasValue() && !isAllSelected()">-->
+        <!--</mat-checkbox>-->
+      <mat-cell  *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="ID">
+      <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.attrGroupId}} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="Subgroup">
+      <mat-header-cell *matHeaderCellDef> Subgroup </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.subgroup}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="selection.selected" cdkFocusInitial>Select</button>
+</div>

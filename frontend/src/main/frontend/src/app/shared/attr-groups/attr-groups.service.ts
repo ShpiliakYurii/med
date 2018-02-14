@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 
@@ -27,7 +27,11 @@ export class AttrGroupsService {
   }
 
   remove(id: number) {
-    return this.http.delete(this.URL +"/"+ id);
+    return this.http.delete(this.URL + "/" + id);
+  }
+
+  getAllByName(name: string): Observable<any> {
+    return this.http.get(this.URL + "/by-name/" + name);
   }
 
 }

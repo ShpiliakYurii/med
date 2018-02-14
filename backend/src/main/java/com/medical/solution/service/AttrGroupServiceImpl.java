@@ -29,17 +29,22 @@ public class AttrGroupServiceImpl implements AttrGroupService {
     }
 
     @Override
-    public AttrGroup getById(long id) {
+    public AttrGroup getById(long id) throws NoSuchMethodException {
         return attrGroupRepository.findById(id);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws NoSuchMethodException {
         attrGroupRepository.delete(id);
     }
 
     @Override
     public List<AttrGroup> getAll() {
         return attrGroupRepository.findAll();
+    }
+
+    @Override
+    public List<AttrGroup> findAllByName(String name){
+        return attrGroupRepository.findAllByName(name);
     }
 }

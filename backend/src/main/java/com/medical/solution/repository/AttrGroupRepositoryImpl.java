@@ -2,7 +2,7 @@ package com.medical.solution.repository;
 
 import com.medical.solution.entity.AttrGroup;
 import com.medical.solution.repository.i.AttrGroupRepository;
-import com.medical.solution.repository.mapper.AttrGroupMapper;
+import com.medical.solution.repository.mapper.AttrGroupRowMapper;
 import com.medical.solution.utils.DBHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,12 +12,14 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.List;
 
 @Repository
 public class AttrGroupRepositoryImpl extends AbstractRepositoryImpl<AttrGroup> implements AttrGroupRepository {
 
     private final static String FIND_ALL_SQL = "SELECT * FROM m_attr_groups order by name";
     private final static String FIND_BY_ID_SQL = "SELECT * FROM m_attr_groups WHERE attr_group_id=?";
+    private final static String FIND_ALL_BY_NAME_SQL = "SELECT * FROM m_attr_groups WHERE lower(name) like CONCAT('%',lower(?),'%')";
     private final static String INSERT_SQL = "INSERT INTO m_attr_groups(attr_group_id, name, subgroup) VALUES(?,?,?)";
     private final static String UPDATE_SQL = "UPDATE m_attr_groups SET name = ?, subgroup = ? WHERE attr_group_id = ?";
     private final static String DELETE_SQL = "DELETE FROM m_attr_groups WHERE attr_group_id = ?";
@@ -29,7 +31,7 @@ public class AttrGroupRepositoryImpl extends AbstractRepositoryImpl<AttrGroup> i
 
     @Override
     public AttrGroup findById(long id) {
-        return getJdbcTemplate().queryForObject(FIND_BY_ID_SQL, new Object[]{id}, new AttrGroupMapper());
+        return getJdbcTemplate().queryForObject(FIND_BY_ID_SQL, new Object[]{id}, new AttrGroupRowMapper());
     }
 
     @Override
@@ -73,8 +75,11 @@ public class AttrGroupRepositoryImpl extends AbstractRepositoryImpl<AttrGroup> i
 
     @Override
     public RowMapper getRowMapper() {
-        return new AttrGroupMapper();
+        return new AttrGroupRowMapper();
     }
 
-
+    @Override
+    public List<AttrGroup> findAllByName(String name){
+        return getJdbcTemplate().query(FIND_ALL_BY_NAME_SQL, new Object[]{name}, new AttrGroupRowMapper());
+    }
 }

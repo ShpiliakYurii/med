@@ -21,14 +21,19 @@ public class Attribute implements Serializable {
 
     private Integer attrTypeId;
 
+    @JsonSerialize(using = LongToStringSerializer.class)
+    @JsonDeserialize(using = StringToLongDeserializer.class)
+    private Long attrTypeDefId;
+
     public Attribute() {
     }
 
-    public Attribute(Long attrId, String name, Long attrGroupId, Integer attrTypeId) {
+    public Attribute(Long attrId, String name, Long attrGroupId, Integer attrTypeId, Long attrTypeDefId) {
         this.attrId = attrId;
         this.name = name;
         this.attrGroupId = attrGroupId;
         this.attrTypeId = attrTypeId;
+        this.attrTypeDefId = attrTypeDefId;
     }
 
     public Long getAttrId() {
@@ -61,5 +66,13 @@ public class Attribute implements Serializable {
 
     public void setAttrTypeId(Integer attrTypeId) {
         this.attrTypeId = attrTypeId;
+    }
+
+    public Long getAttrTypeDefId() {
+        return attrTypeDefId;
+    }
+
+    public void setAttrTypeDefId(Long attrTypeDefId) {
+        this.attrTypeDefId = attrTypeDefId;
     }
 }

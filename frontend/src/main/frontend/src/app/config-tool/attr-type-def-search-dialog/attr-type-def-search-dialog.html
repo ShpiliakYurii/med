@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Select attribute type definition</h1>
+<div mat-dialog-content>
+  <span>Name </span><input [(ngModel)]="nameForSearch"><a href="#" (click)="selectAttrTypeDefByName()">Search</a>
+  <!--<p>Subgroup</p>-->
+  <!--<mat-form-field>-->
+    <!--<input matInput [(ngModel)]="data.attrGroup.subgroup">-->
+  <!--</mat-form-field>-->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <!--<button mat-button [mat-dialog-close]="data.attrGroup" cdkFocusInitial>Add</button>-->
+</div>

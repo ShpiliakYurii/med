@@ -4,7 +4,8 @@ import {ObjectTypesService} from './shared/object-types/object-types.service';
 import {HttpClientModule} from '@angular/common/http';
 import {CommonModule, NgClass} from '@angular/common';
 import {
-  MatButtonModule, MatCardModule, MatDialogModule, MatInputModule, MatListModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatInputModule, MatListModule, MatSelectModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -19,13 +20,20 @@ import {AttributesService} from "./shared/attributes/attributes.service";
 import {AttrGroupsService} from "./shared/attr-groups/attr-groups.service";
 import {AttrObjectTypeService} from "./shared/attr-object-type/attr-object-type.service";
 import {AddAttrGroupDialog} from "./config-tool/add-attr-group-dialog/add-attr-group-dialog";
+import {AttrTypeDefSearchDialog} from "./config-tool/attr-type-def-search-dialog/attr-type-def-search-dialog";
+import {AttrTypeDefService} from "./shared/attr-type-def/attr-type-def.service";
+import {AddAttrTypeDefDialog} from "./config-tool/add-attr-type-def-dialog/add-attr-type-def-dialog";
+import {AttrGroupSearchDialog} from "./config-tool/attr-group-search-dialog/attr-group-search-dialog";
 
 
 @NgModule({
   entryComponents: [
     AddObjectTypeDialog,
     UpdateObjectTypeDialog,
-    AddAttrGroupDialog
+    AddAttrGroupDialog,
+    AttrTypeDefSearchDialog,
+    AddAttrTypeDefDialog,
+    AttrGroupSearchDialog
   ],
   declarations: [
     AppComponent,
@@ -33,6 +41,9 @@ import {AddAttrGroupDialog} from "./config-tool/add-attr-group-dialog/add-attr-g
     AddObjectTypeDialog,
     UpdateObjectTypeDialog,
     AddAttrGroupDialog,
+    AttrTypeDefSearchDialog,
+    AddAttrTypeDefDialog,
+    AttrGroupSearchDialog,
     TreeNode
   ],
   imports: [
@@ -44,16 +55,20 @@ import {AddAttrGroupDialog} from "./config-tool/add-attr-group-dialog/add-attr-g
     MatInputModule,
     MatListModule,
     MatToolbarModule,
+    MatSelectModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
+    MatTableModule,
     CommonModule
   ],
   providers: [
     ObjectTypesService,
     AttributesService,
     AttrGroupsService,
-    AttrObjectTypeService
+    AttrObjectTypeService,
+    AttrTypeDefService
   ],
   bootstrap: [AppComponent]
 })

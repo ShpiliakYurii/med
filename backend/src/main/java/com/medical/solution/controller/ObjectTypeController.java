@@ -32,7 +32,7 @@ public class ObjectTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<?> getAll() throws NoSuchMethodException {
         return new ResponseEntity<Object>(objectTypeService.getAllHierarchy(), HttpStatus.OK);
     }
 

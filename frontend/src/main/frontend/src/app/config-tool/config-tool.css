@@ -4,19 +4,22 @@
 }
 
 .object-types-block {
-  width: 30%;
+  width: 20%;
   float: left;
   padding: 0;
   overflow-x: auto;
   overflow-y: auto;
+  height: 100%;
 }
 
 .attributes-block {
-  width: 70%;
+  width: 80%;
   float: left;
   padding: 0;
   height: 100%;
   overflow-y: auto;
+  margin-left: -1px;
+  border-left: solid 1px;
 }
 
 .small-header {
@@ -87,3 +90,15 @@
 .dropdown:hover .dropbtn {
   background-color: rgba(85, 85, 85, 0.46);
 }
+
+.aot{
+  height: 70%;
+}
+
+.attribute-editing-block{
+  height: 30%;
+  border-top: solid 1px;
+  margin-top: -1px;
+  padding: 5px;
+}
+

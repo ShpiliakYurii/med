@@ -29,12 +29,12 @@ public class AttributeServiceImpl implements AttributeService {
     }
 
     @Override
-    public Attribute getById(long id) {
+    public Attribute getById(long id) throws NoSuchMethodException {
         return attributeRepository.findById(id);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws NoSuchMethodException {
         attributeRepository.delete(id);
     }
 

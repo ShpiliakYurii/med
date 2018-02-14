@@ -2,9 +2,7 @@ package com.medical.solution.repository;
 
 import com.medical.solution.entity.AttributeObjectType;
 import com.medical.solution.repository.i.AttributeObjectTypeRepository;
-import com.medical.solution.repository.mapper.AttributeMapper;
 import com.medical.solution.repository.mapper.AttributeObjectTypeRowMapper;
-import com.medical.solution.utils.DBHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -13,7 +11,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
-import java.util.List;
 
 @Repository
 public class AttributeObjectTypeRepositoryImpl extends AbstractRepositoryImpl<AttributeObjectType> implements AttributeObjectTypeRepository {

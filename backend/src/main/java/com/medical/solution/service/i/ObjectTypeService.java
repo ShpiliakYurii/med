@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ObjectTypeService extends AbstractDataService<ObjectType> {
-    ObjectType getAllHierarchy();
+    ObjectType getAllHierarchy() throws NoSuchMethodException;
 }

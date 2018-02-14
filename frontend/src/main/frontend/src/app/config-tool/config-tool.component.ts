@@ -5,9 +5,12 @@ import {MatDialog} from "@angular/material";
 import {UpdateObjectTypeDialog} from "./update-object-type-dialog/update-object-type-dialog";
 import {AddAttrGroupDialog} from "./add-attr-group-dialog/add-attr-group-dialog";
 import {AttrGroupsService} from "../shared/attr-groups/attr-groups.service";
+import {AttrTypeDefSearchDialog} from "./attr-type-def-search-dialog/attr-type-def-search-dialog";
+import {AddAttrTypeDefDialog} from "./add-attr-type-def-dialog/add-attr-type-def-dialog";
+import {AttrGroupSearchDialog} from "./attr-group-search-dialog/attr-group-search-dialog";
 
 @Component({
-  selector: 'app-object-types-list',
+  selector: 'config-tool',
   templateUrl: './config-tool.html',
   styleUrls: ['./config-tool.css']
 })
@@ -18,6 +21,9 @@ export class ConfigToolComponent implements OnInit {
   attrGroups: Array<any>;
   selectedObjectType: any;
   attrGroupForAdding: any = {name: '', attrGroupId: undefined, subgroup: ''};
+  selectedAttribute: any = {name: '', attrGroupId: undefined, attrTypeId: 1, attrTypeDefId: undefined};
+  attrTypeDefForAdding: any = {name: '', attrTypeDefId: undefined, attrTypeId: 4};
+  selectedAttributeGroup: any = {name: '', attrGroupId: undefined, subgroup: ''};
 
   //VARIABLES BLOCK END
 
@@ -28,6 +34,7 @@ export class ConfigToolComponent implements OnInit {
   ngOnInit() {
     this.objectTypesService.getAll().subscribe(data => {
       this.rootObjectType = data;
+      console.log(this.rootObjectType);
       this.selectedObjectType = this.rootObjectType;
     });
 
@@ -86,6 +93,41 @@ export class ConfigToolComponent implements OnInit {
         this.objectTypesService.update(this.selectedObjectType).subscribe(data => {
         });
       }
+    });
+  }
+
+  openAttrGroupSearchDialog(): void {
+    let dialogRef = this.dialog.open(AttrGroupSearchDialog, {
+      width: '600px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log(data);
+      if (data && data.length > 0)
+        this.selectedAttributeGroup = data[0];
+    });
+  }
+
+  openAttrTypeDefSearchDialog(): void {
+    let dialogRef = this.dialog.open(AttrTypeDefSearchDialog, {
+      width: '400px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  openAddAttrTypeDefDialog(): void {
+    let dialogRef = this.dialog.open(AddAttrTypeDefDialog, {
+      width: '400px',
+      data: {attrTypeDef: this.attrTypeDefForAdding}
+    });
+
+    dialogRef.afterClosed().subscribe(data => {
+      console.log(data);
     });
   }
 
