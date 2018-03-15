@@ -1,15 +1,15 @@
-<h1 mat-dialog-title>Add new attr group</h1>
-<div mat-dialog-content>
-  <p>Name</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.attrGroup.name">
-  </mat-form-field>
-  <p>Subgroup</p>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.attrGroup.subgroup">
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.attrGroup" cdkFocusInitial>Add</button>
+<div class="general-dialog-content">
+  <h6 class="central-title">Add new attr group</h6>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.attrGroup.name" placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.attrGroup.subgroup" placeholder="Subgroup">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data.attrGroup" cdkFocusInitial>Add</button>
+  </div>
 </div>

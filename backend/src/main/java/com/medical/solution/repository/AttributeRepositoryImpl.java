@@ -43,7 +43,10 @@ public class AttributeRepositoryImpl extends AbstractRepositoryImpl<Attribute> i
             ps.setLong(2, attr.getAttrId());
             ps.setInt(3, attr.getAttrTypeId());
             ps.setLong(4, attr.getAttrGroupId());
-            ps.setLong(5, attr.getAttrTypeDefId());
+            if (attr.getAttrTypeDefId() != null)
+                ps.setLong(5, attr.getAttrTypeDefId());
+            else
+                ps.setObject(5, null);
             return ps;
         }, holder);
 
@@ -59,7 +62,10 @@ public class AttributeRepositoryImpl extends AbstractRepositoryImpl<Attribute> i
             ps.setInt(2, attr.getAttrTypeId());
             ps.setLong(3, attr.getAttrGroupId());
             ps.setLong(4, attr.getAttrId());
-            ps.setLong(5, attr.getAttrTypeDefId());
+            if (attr.getAttrTypeDefId() != null)
+                ps.setLong(5, attr.getAttrTypeDefId());
+            else
+                ps.setObject(5, null);
             return ps;
         }, holder);
 

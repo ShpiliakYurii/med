@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 @Component({
   selector: 'add-attr-group-dialog',
   templateUrl: 'add-attr-group-dialog.html',
+  styleUrls:['../general-dialog-styles.css']
 })
 export class AddAttrGroupDialog{
 

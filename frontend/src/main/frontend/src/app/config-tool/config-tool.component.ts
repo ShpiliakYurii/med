@@ -8,11 +8,15 @@ import {AttrGroupsService} from "../shared/attr-groups/attr-groups.service";
 import {AttrTypeDefSearchDialog} from "./attr-type-def-search-dialog/attr-type-def-search-dialog";
 import {AddAttrTypeDefDialog} from "./add-attr-type-def-dialog/add-attr-type-def-dialog";
 import {AttrGroupSearchDialog} from "./attr-group-search-dialog/attr-group-search-dialog";
+import {ListValueService} from "../shared/list-value/list-value.service";
+import {AttrTypeDefService} from "../shared/attr-type-def/attr-type-def.service";
+import {AttributesService} from "../shared/attributes/attributes.service";
+import {AttrObjectTypeService} from "../shared/attr-object-type/attr-object-type.service";
 
 @Component({
   selector: 'config-tool',
   templateUrl: './config-tool.html',
-  styleUrls: ['./config-tool.css']
+  styleUrls: ['./config-tool.css', 'general-dialog-styles.css']
 })
 export class ConfigToolComponent implements OnInit {
 
@@ -22,12 +26,16 @@ export class ConfigToolComponent implements OnInit {
   selectedObjectType: any;
   attrGroupForAdding: any = {name: '', attrGroupId: undefined, subgroup: ''};
   selectedAttribute: any = {name: '', attrGroupId: undefined, attrTypeId: 1, attrTypeDefId: undefined};
-  attrTypeDefForAdding: any = {name: '', attrTypeDefId: undefined, attrTypeId: 4};
+  attrTypeDefForAdding: any = {name: '', attrTypeDefId: undefined, attrTypeId: 4, listValues: []};
   selectedAttributeGroup: any = {name: '', attrGroupId: undefined, subgroup: ''};
+  listValues: Array<any> = [];
+  selectedAttrTypeDef: any = {name: ''};
 
   //VARIABLES BLOCK END
 
   constructor(private objectTypesService: ObjectTypesService, private attrGroupsService: AttrGroupsService,
+              private attrTypeDefService: AttrTypeDefService, private listValueService: ListValueService,
+              private attributesService: AttributesService, private attrObjectTypeService: AttrObjectTypeService,
               public dialog: MatDialog) {
   }
 
@@ -65,7 +73,7 @@ export class ConfigToolComponent implements OnInit {
     });
   }
 
-  openNewAttrGroupDialog(): void {
+  openAddAttrGroupDialog(): void {
     let dialogRef = this.dialog.open(AddAttrGroupDialog, {
       width: '250px',
       data: {attrGroup: this.attrGroupForAdding}
@@ -103,7 +111,6 @@ export class ConfigToolComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
       if (data && data.length > 0)
         this.selectedAttributeGroup = data[0];
     });
@@ -111,23 +118,36 @@ export class ConfigToolComponent implements OnInit {
 
   openAttrTypeDefSearchDialog(): void {
     let dialogRef = this.dialog.open(AttrTypeDefSearchDialog, {
-      width: '400px',
+      width: '600px',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
+      if (data && data.length > 0)
+        this.selectedAttrTypeDef = data[0];
     });
   }
 
   openAddAttrTypeDefDialog(): void {
     let dialogRef = this.dialog.open(AddAttrTypeDefDialog, {
-      width: '400px',
-      data: {attrTypeDef: this.attrTypeDefForAdding}
+      width: '600px',
+      maxHeight: '600px',
+      data: {
+        attrTypeDef: this.attrTypeDefForAdding,
+        listValues: this.listValues
+      }
     });
 
     dialogRef.afterClosed().subscribe(data => {
-      console.log(data);
+      this.attrTypeDefService.add(this.attrTypeDefForAdding).subscribe(data => {
+        this.selectedAttrTypeDef = data;
+        for (let lv of this.listValues) {
+          lv.attrTypeDefId = this.selectedAttrTypeDef.attrTypeDefId;
+          this.listValueService.add(lv).subscribe(data => {
+            console.log(data);
+          })
+        }
+      });
     });
   }
 
@@ -146,6 +166,40 @@ export class ConfigToolComponent implements OnInit {
       }
       this.removeObjectTypeFromHierarchy(entry, objectType);
     });
+  }
+
+  addAttribute(): void {
+    if (this.validateAttributeParameters()) {
+      this.selectedAttribute.attrGroupId = this.selectedAttributeGroup.attrGroupId;
+      this.selectedAttribute.attrTypeDefId = this.selectedAttrTypeDef.attrTypeDefId;
+      this.attributesService.add(this.selectedAttribute).subscribe(data => {
+        console.log(data);
+        this.selectedAttribute = data;
+        this.attrObjectTypeService.add({attrId: this.selectedAttribute.attrId, objectTypeId: this.selectedObjectType.objectTypeId, options: 0}).subscribe(data => {
+          console.log(data);
+        })
+      });
+    } else {
+      console.log("Fill parameters");
+      console.log(this.selectedAttribute);
+    }
+  }
+
+  validateAttributeParameters(): boolean {
+    if (!this.selectedAttribute || !this.selectedAttribute.name) {
+      console.log("Uncorrected attribute name!");
+      return false;
+    }
+    if (!this.selectedAttributeGroup || !this.selectedAttributeGroup.attrGroupId) {
+      console.log("Uncorrected attr group!");
+      return false;
+    }
+    if (this.selectedAttribute.attrTypeId == 4 || this.selectedAttribute.attrTypeId == 5)
+      if (!this.selectedAttrTypeDef || !this.selectedAttrTypeDef.attrTypeDefId) {
+        console.log("Uncorrected attr type def!");
+        return false;
+      }
+    return true;
   }
 
 }

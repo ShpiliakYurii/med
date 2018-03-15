@@ -6,7 +6,7 @@ import {SelectionModel} from "@angular/cdk/collections";
 @Component({
   selector: 'attr-group-search-dialog',
   templateUrl: 'attr-group-search-dialog.html',
-  styleUrls:['attr-group-search-dialog.css']
+  styleUrls:['attr-group-search-dialog.css', '../general-dialog-styles.css']
 })
 export class AttrGroupSearchDialog {
 

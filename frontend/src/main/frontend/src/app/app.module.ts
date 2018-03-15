@@ -10,6 +10,7 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 import {AppComponent} from './app.component';
@@ -24,6 +25,7 @@ import {AttrTypeDefSearchDialog} from "./config-tool/attr-type-def-search-dialog
 import {AttrTypeDefService} from "./shared/attr-type-def/attr-type-def.service";
 import {AddAttrTypeDefDialog} from "./config-tool/add-attr-type-def-dialog/add-attr-type-def-dialog";
 import {AttrGroupSearchDialog} from "./config-tool/attr-group-search-dialog/attr-group-search-dialog";
+import {ListValueService} from "./shared/list-value/list-value.service";
 
 
 @NgModule({
@@ -61,14 +63,16 @@ import {AttrGroupSearchDialog} from "./config-tool/attr-group-search-dialog/attr
     ReactiveFormsModule,
     MatDialogModule,
     MatTableModule,
-    CommonModule
+    CommonModule,
+    NgbModule
   ],
   providers: [
     ObjectTypesService,
     AttributesService,
     AttrGroupsService,
     AttrObjectTypeService,
-    AttrTypeDefService
+    AttrTypeDefService,
+    ListValueService
   ],
   bootstrap: [AppComponent]
 })

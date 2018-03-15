@@ -1,16 +1,42 @@
-<h1 mat-dialog-title>Add new attr group</h1>
-<div mat-dialog-content>
-  <mat-form-field>
-    <input matInput [(ngModel)]="data.attrTypeDef.name" placeholder="Name">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-select [(ngModel)]="data.attrTypeDef.attrTypeId" placeholder="Attr type">
-      <mat-option [value]="4">List</mat-option>
-      <mat-option [value]="5">Reference</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button [mat-dialog-close]="data.attrTypeDef" cdkFocusInitial>Add</button>
+<div class="general-dialog-content">
+  <h6 class="central-title">Add new attr type definition</h6>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput [(ngModel)]="data.attrTypeDef.name" placeholder="Name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select [(ngModel)]="data.attrTypeDef.attrTypeId" placeholder="Attr type">
+        <mat-option [value]="4">List</mat-option>
+        <mat-option [value]="5">Reference</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="list-values-block" [hidden]="data.attrTypeDef.attrTypeId != 4">
+    <h6 class="central-title">List values</h6>
+    <div class="row">
+      <div class="col-1">
+        <img src="../../../assets/img/add.png" class="add-image-button-general"
+         (click)="createNewListValue()"/>
+      </div>
+      <div class="col-6">Value</div>
+      <div class="col-3">List Value ID</div>
+      <div class="col-2"></div>
+    </div>
+    <div class="row" *ngFor="let item of data.listValues; let i = index">
+      <div class="col-7">
+        <mat-form-field class="max-width-input-text">
+          <input matInput [(ngModel)]="item.value" width="100%">
+        </mat-form-field>
+      </div>
+      <div class="col-3 text-align-center">{{item.listValueId}}</div>
+      <div class="col-2">
+        <img src="../../../assets/img/delete.png" class="delete-image-button-general"
+         (click)="deleteListValue(i)"/>
+      </div>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add</button>
+  </div>
 </div>

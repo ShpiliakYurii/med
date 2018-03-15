@@ -18,7 +18,7 @@ import java.util.List;
 public class AttrTypeDefRepositoryImpl extends AbstractRepositoryImpl<AttrTypeDef> implements AttrTypeDefRepository {
 
     private final static String FIND_ALL_SQL = "SELECT * FROM m_attr_type_def";
-    private final static String FIND_ALL_BY_NAME_SQL = "SELECT * FROM m_attr_type_def where name like '%?%'";
+    private final static String FIND_ALL_BY_NAME_SQL = "SELECT * FROM m_attr_type_def where lower(name) like CONCAT('%',lower(?),'%')";
     private final static String FIND_BY_ID_SQL = "SELECT * FROM m_attr_type_def WHERE m_attr_type_def = ?";
     private final static String INSERT_SQL = "INSERT INTO m_attr_type_def(name, attr_type_def_id, attr_type_id) VALUES(?,?,?)";
     private final static String UPDATE_SQL = "UPDATE m_attr_type_def SET name = ?, attr_type_id = ? WHERE m_attr_type_def = ?";

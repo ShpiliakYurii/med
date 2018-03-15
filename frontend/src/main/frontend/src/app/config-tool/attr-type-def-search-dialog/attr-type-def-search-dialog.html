@@ -1,12 +1,45 @@
-<h1 mat-dialog-title>Select attribute type definition</h1>
-<div mat-dialog-content>
-  <span>Name </span><input [(ngModel)]="nameForSearch"><a href="#" (click)="selectAttrTypeDefByName()">Search</a>
-  <!--<p>Subgroup</p>-->
-  <!--<mat-form-field>-->
-    <!--<input matInput [(ngModel)]="data.attrGroup.subgroup">-->
-  <!--</mat-form-field>-->
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Cancel</button>
-  <!--<button mat-button [mat-dialog-close]="data.attrGroup" cdkFocusInitial>Add</button>-->
+<div class="general-dialog-content">
+  <h6 class="central-title">Select attribute type definition</h6>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput [(ngModel)]="nameForSearch" placeholder="Name">
+    </mat-form-field>
+    <button mat-button (click)="selectAttrTypeDefByName()">Search</button>
+  </div>
+  <div class="founded-attr-groups-table" [hidden]="foundedAttrTypeDefs.length == 0">
+    <mat-table #table [dataSource]="foundedAttrTypeDefs">
+
+      <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? toggle(row) : null"
+                        [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <!-- Position Column -->
+      <ng-container matColumnDef="Name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}}</mat-cell>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="attrTypeDefID">
+        <mat-header-cell *matHeaderCellDef> Attr Type Def ID</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.attrTypeDefId}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="selection.selected" cdkFocusInitial
+            [hidden]="!selection.selected.length > 0">Select
+    </button>
+  </div>
 </div>

@@ -19,38 +19,58 @@
   <div class="aot">
     <div class="small-header">
       <span><b>Attributes</b></span>
-      <a href="#" (click)="openNewAttrGroupDialog()">+ ATTR GROUP</a>
+      <a href="#" (click)="openAddAttrGroupDialog()">+ ATTR GROUP</a>
       <a href="#">+ ATTR</a>
     </div>
   </div>
   <div class="attribute-editing-block">
-    <div>
-      <span>Name:</span>
-      <input [(ngModel)]="selectedAttribute.name">
+    <div class="attribute-detail-row row">
+      <div class="col-2 attribute-detail-label">
+        <span>Name:</span>
+      </div>
+      <div class="col-6">
+        <input [(ngModel)]="selectedAttribute.name" class="max-width-input-text">
+      </div>
     </div>
-    <div>
-      <span>Attr Group:</span>
-      <span [hidden]="!selectedAttributeGroup.name">{{selectedAttributeGroup.name}}(<i>{{selectedAttributeGroup.subgroup}}</i>)</span>
-      <a href="#" (click)="openAttrGroupSearchDialog()">...</a>
-      <a href="#" (click)="openAddAttrTypeDefDialog()">+</a>
-      <!--<select>-->
-        <!--<option *ngFor="let ag of attrGroups" value="{{ag.attrGroupId}}">{{ag.name}}</option>-->
-      <!--</select>-->
+    <div class="attribute-detail-row row">
+      <div class="col-2 attribute-detail-label">
+        <span>Attr Group:</span>
+      </div>
+      <div class="col-6">
+        <span [hidden]="!selectedAttributeGroup.name" class="max-width-input-text">{{selectedAttributeGroup.name}}(<i>{{selectedAttributeGroup.subgroup}}</i>)</span>
+        <img src="../../assets/img/more.png" class="image-button-general" (click)="openAttrGroupSearchDialog()">
+        <img src="../../assets/img/add.png" class="image-button-general" (click)="openAddAttrGroupDialog()">
+      </div>
     </div>
-    <div>
-      <span>Type:</span>
-      <select [(ngModel)]="selectedAttribute.attrTypeId">
-        <option value="1">Text</option>
-        <option value="2">Number</option>
-        <option value="3">Date</option>
-        <option value="4">List</option>
-        <option value="5">Reference</option>
-      </select>
+    <div class="attribute-detail-row row">
+      <div class="col-2 attribute-detail-label">
+        <span>Type:</span>
+      </div>
+      <div class="col-6">
+        <select [(ngModel)]="selectedAttribute.attrTypeId" class="max-width-input-text">
+          <option value="1">Text</option>
+          <option value="2">Number</option>
+          <option value="3">Date</option>
+          <option value="4">List</option>
+          <option value="5">Reference</option>
+        </select>
+      </div>
     </div>
-    <div [hidden]="selectedAttribute.attrTypeId != 4 && selectedAttribute.attrTypeId != 5">
-      <span>Attr Type Def:</span>
-      <a href="#" (click)="openAttrTypeDefSearchDialog()">...</a>
-      <a href="#" (click)="openAddAttrTypeDefDialog()">+</a>
+    <div class="attribute-detail-row row"
+         [hidden]="selectedAttribute.attrTypeId != 4 && selectedAttribute.attrTypeId != 5">
+      <div class="col-2 attribute-detail-label">
+        <span>Attr Type Def:</span>
+      </div>
+      <div class="col-6">
+        <span [hidden]="!selectedAttrTypeDef.name" class="max-width-input-text">
+          <a href="#">{{selectedAttrTypeDef.name}}</a>
+        </span>
+        <img src="../../assets/img/more.png" class="image-button-general" (click)="openAttrTypeDefSearchDialog()"/>
+        <img src="../../assets/img/add.png" class="image-button-general" (click)="openAddAttrTypeDefDialog()"/>
+      </div>
+    </div>
+    <div class="attribute-detail-row row">
+      <button mat-button (click)="addAttribute()">Save</button>
     </div>
   </div>
 </div>
