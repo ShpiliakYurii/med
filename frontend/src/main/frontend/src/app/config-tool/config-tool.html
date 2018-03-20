@@ -19,8 +19,43 @@
   <div class="aot">
     <div class="small-header">
       <span><b>Attributes</b></span>
-      <a href="#" (click)="openAddAttrGroupDialog()">+ ATTR GROUP</a>
-      <a href="#">+ ATTR</a>
+      <!--<a href="#" (click)="openAddAttrGroupDialog()">+ ATTR GROUP</a>-->
+      <img src="../../assets/img/add.png" class="image-button-general" (click)="prepareNewAttribute()">
+    </div>
+    <div class="aots">
+      <div class="aot-group-row-header">
+        <div class="aot-group-attributes">
+          <div class="aot-attribute-row-header">
+            <div class="aot-attribute-col aot-attribute-col-name">Name</div>
+            <div class="aot-attribute-col aot-attribute-col-id">ID</div>
+            <div class="aot-attribute-col aot-attribute-col-type">Type</div>
+          </div>
+        </div>
+      </div>
+      <div class="aot-group-row" *ngFor="let group of aotsKeys;">
+        <div class="aot-group-header">
+          <span class="pointer" (click)="aots[group][0].show = !aots[group][0].show"
+                [hidden]="aots[group][0].show">+</span>
+          <span class="pointer" (click)="aots[group][0].show = !aots[group][0].show"
+                [hidden]="!aots[group][0].show">-</span>
+          {{group}}
+          <img src="../../assets/img/copy-icon.png" class="image-button-general-copy"
+               (click)="copyToClipboard(aots[group][0].attrGroupId)" title="Copy attr group id to clipboard"></div>
+        <div class="aot-group-attributes" [hidden]="!aots[group][0].show">
+          <div class="aot-attribute-row" *ngFor="let attr of aots[group];let i = index"
+               [ngClass]="{'aot-attribute-even-row': i%2 == 0, 'aot-attribute-non-even-row': i%2 == 1,
+               'aot-attribute-selected-row': attr.attrId == selectedAttribute.attrId}"
+               (click)="getAttrById(attr.attrId)">
+            <div class="aot-attribute-col aot-attribute-col-name">{{attr.attrName}}</div>
+            <div class="aot-attribute-col aot-attribute-col-id">{{attr.attrId}}
+              <img src="../../assets/img/copy-icon.png" class="image-button-general-copy"
+                   (click)="copyToClipboard(attr.attrId)" title="Copy attr id to clipboard"></div>
+            <div class="aot-attribute-col aot-attribute-col-type">
+              {{this.attrTypeDefService.getAttrTypeViewById(attr.attrTypeId)}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="attribute-editing-block">

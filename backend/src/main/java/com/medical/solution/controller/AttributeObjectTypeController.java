@@ -41,4 +41,11 @@ public class AttributeObjectTypeController {
         attributeObjectTypeService.delete(id, objectTypeId);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @GetMapping("/ot/{otId}/{hierarchical}")
+    public ResponseEntity<?> getByObjectType(@PathVariable("otId") long otId,
+                                             @PathVariable("hierarchical") boolean hierarchical) {
+        //TODO hierarchical attributes binding
+        return new ResponseEntity<Object>(attributeObjectTypeService.findAllByOT(otId), HttpStatus.OK);
+    }
 }

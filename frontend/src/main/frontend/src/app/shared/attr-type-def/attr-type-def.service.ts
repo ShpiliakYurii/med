@@ -20,4 +20,25 @@ export class AttrTypeDefService {
     return result;
   }
 
+  getById(id: number): Observable<any> {
+    return this.http.get(this.URL + "/" + id);
+  }
+
+  getAttrTypeViewById(id): string {
+    switch (id) {
+      case 1:
+        return "Text";
+      case 2:
+        return "Number";
+      case 3:
+        return "Date";
+      case 4:
+        return "List";
+      case 5:
+        return "Reference";
+      default:
+        return "";
+    }
+  }
+
 }

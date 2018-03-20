@@ -30,6 +30,8 @@ export class ConfigToolComponent implements OnInit {
   selectedAttributeGroup: any = {name: '', attrGroupId: undefined, subgroup: ''};
   listValues: Array<any> = [];
   selectedAttrTypeDef: any = {name: ''};
+  aots: any;
+  aotsKeys: Array<any>;
 
   //VARIABLES BLOCK END
 
@@ -42,13 +44,66 @@ export class ConfigToolComponent implements OnInit {
   ngOnInit() {
     this.objectTypesService.getAll().subscribe(data => {
       this.rootObjectType = data;
-      console.log(this.rootObjectType);
       this.selectedObjectType = this.rootObjectType;
+      this.loadAOTS(this.selectedObjectType.objectTypeId);
     });
 
     this.attrGroupsService.getAll().subscribe(data => {
       this.attrGroups = data;
     })
+  }
+
+  prepareNewAttribute() {
+    this.selectedAttribute.name = '';
+    this.selectedAttribute.attrId = undefined;
+  }
+
+  getAttrById(attrId: number) {
+    if (this.selectedAttribute.attrId != attrId) {
+      this.attributesService.getById(attrId).subscribe(data => {
+        this.selectedAttribute = data;
+        console.log(this.selectedAttribute);
+        this.updateSelectedAttributeInformation();
+      });
+    }
+  }
+
+  updateSelectedAttributeInformation() {
+    if (this.selectedAttributeGroup.attrGroupId != this.selectedAttribute.attrGroupId) {
+      this.attrGroupsService.getById(this.selectedAttribute.attrGroupId).subscribe(data => {
+        this.selectedAttributeGroup = data;
+      });
+    }
+    if ((this.selectedAttribute.attrTypeId == 4 || this.selectedAttribute.attrTypeId == 5) &&
+      this.selectedAttrTypeDef.attrTypeDefId != this.selectedAttribute.attrTypeDefId) {
+      this.attrTypeDefService.getById(this.selectedAttribute.attrTypeDefId).subscribe(data => {
+        this.selectedAttrTypeDef = data;
+      });
+    }
+  }
+
+  copyToClipboard(val: string) {
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
+  loadAOTS(objectTypeId) {
+    this.attrObjectTypeService.getByObjectType(objectTypeId, false).subscribe(data => {
+      this.aots = data;
+      this.aotsKeys = Object.keys(this.aots);
+      for (let prop in this.aots) {
+        console.log(this.aots[prop][0]);
+      }
+    });
   }
 
   get self(): ConfigToolComponent {
@@ -84,6 +139,7 @@ export class ConfigToolComponent implements OnInit {
         console.log(this.attrGroupForAdding);
         this.attrGroupsService.add(this.attrGroupForAdding).subscribe(data => {
           this.attrGroups.push(data);
+          this.selectedAttributeGroup = data;
           this.attrGroupForAdding = {name: '', attrGroupId: undefined, subgroup: ''};
         });
       }
@@ -162,6 +218,7 @@ export class ConfigToolComponent implements OnInit {
       if (entry.objectTypeId == objectType.objectTypeId) {
         parent.childes.splice(index, 1);
         this.selectedObjectType = parent;
+        this.loadAOTS(this.selectedObjectType.objectTypeId);
         return;
       }
       this.removeObjectTypeFromHierarchy(entry, objectType);
@@ -175,7 +232,12 @@ export class ConfigToolComponent implements OnInit {
       this.attributesService.add(this.selectedAttribute).subscribe(data => {
         console.log(data);
         this.selectedAttribute = data;
-        this.attrObjectTypeService.add({attrId: this.selectedAttribute.attrId, objectTypeId: this.selectedObjectType.objectTypeId, options: 0}).subscribe(data => {
+        this.attrObjectTypeService.add({
+          attrId: this.selectedAttribute.attrId,
+          objectTypeId: this.selectedObjectType.objectTypeId,
+          options: 0
+        }).subscribe(data => {
+          this.loadAOTS(this.selectedObjectType.objectTypeId);
           console.log(data);
         })
       });
@@ -228,6 +290,7 @@ export class TreeNode implements OnInit {
 
   changeSelectedObjectType(ot: any): void {
     this._parent.selectedObjectType = ot;
+    this._parent.loadAOTS(this._parent.selectedObjectType.objectTypeId);
   }
 
   ngOnInit() {

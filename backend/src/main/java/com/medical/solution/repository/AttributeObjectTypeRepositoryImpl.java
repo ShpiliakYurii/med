@@ -2,6 +2,8 @@ package com.medical.solution.repository;
 
 import com.medical.solution.entity.AttributeObjectType;
 import com.medical.solution.repository.i.AttributeObjectTypeRepository;
+import com.medical.solution.repository.mapper.AOTViewRowMapper;
+import com.medical.solution.repository.mapper.AttrGroupRowMapper;
 import com.medical.solution.repository.mapper.AttributeObjectTypeRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,12 +13,18 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class AttributeObjectTypeRepositoryImpl extends AbstractRepositoryImpl<AttributeObjectType> implements AttributeObjectTypeRepository {
 
     private final static String FIND_ALL_SQL = "SELECT * FROM attribute_object_type";
     private final static String FIND_BY_ID_SQL = "SELECT * FROM attribute_object_type WHERE object_type_id = ?";
+    private final static String FIND_BY_OT_ID_SQL = "SELECT aot.attr_id, aot.options, attr.name attr_name, attr.attr_type_id," +
+            " attr_group.attr_group_id, attr_group.name attr_group_name " +
+            "FROM attribute_object_type aot, m_attributes attr, m_attr_groups attr_group  " +
+            "WHERE object_type_id = ? AND aot.attr_id = attr.attr_id AND attr.attr_group_id = attr_group.attr_group_id";
     private final static String INSERT_SQL = "INSERT INTO attribute_object_type(attr_id, object_type_id, options) VALUES(?,?,?)";
     private final static String UPDATE_SQL = "UPDATE attribute_object_type SET options = ? WHERE attr_id = ? AND object_type_id = ? ";
     private final static String DELETE_SQL = "DELETE FROM attribute_object_type WHERE attr_id = ? and object_type_id = ?";
@@ -87,6 +95,11 @@ public class AttributeObjectTypeRepositoryImpl extends AbstractRepositoryImpl<At
             ps.setLong(2, objectTypeId);
             return ps;
         });
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllByOT(long otId) {
+        return getJdbcTemplate().query(FIND_BY_OT_ID_SQL, new Object[]{otId}, new AOTViewRowMapper());
     }
 
 

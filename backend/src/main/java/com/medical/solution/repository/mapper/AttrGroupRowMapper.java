@@ -1,6 +1,6 @@
 package com.medical.solution.repository.mapper;
 
-import com.medical.solution.entity.AttrGroup;;
+import com.medical.solution.entity.AttrGroup;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -104,6 +104,10 @@
   width: 14px;
 }
 
+.image-button-general-copy {
+  width: 14px;
+}
+
 .image-button-general:hover {
   -webkit-transform: scale(1.3);
   -moz-transform: scale(1.3);
@@ -111,11 +115,18 @@
   transform: scale(1.3);
 }
 
+.image-button-general-copy:hover {
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
 .attribute-detail-row {
   margin-left: 0px;
   margin-right: 0px;
-  padding-top:5px;
-  padding-bottom:5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .attribute-detail-label {
@@ -123,6 +134,71 @@
   text-align: right;
 }
 
-add-attr-type-def-dialog{
+add-attr-type-def-dialog {
   max-height: 800px;
+}
+
+.aots {
+  width: 100%;
+  overflow-y: auto;
+}
+
+.aot-group-header {
+  height: 18px;
+  width: 100%;
+  color: #0000ff;
+  font-weight: bold;
+  padding-left: 15px;
+  background-color: #7f7f7f9c;
+}
+
+.aot-attribute-row {
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 5px;
+  height: 18px;
+}
+
+.aot-attribute-row-header {
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 5px;
+  height: 18px;
+}
+
+.aot-attribute-row:hover {
+  cursor: pointer;
+}
+
+.aot-attribute-even-row {
+  background-color: #cacaca;
+}
+
+.aot-attribute-non-even-row {
+  background-color: #d9d9d7;
+}
+
+.aot-attribute-selected-row {
+  color: white;
+}
+
+.aot-attribute-col {
+  display: inline-block;
+}
+
+.aot-attribute-col-name {
+  width: 40%;
+}
+
+.aot-attribute-col-id {
+  width: 20%;
+}
+
+.aot-attribute-col-type {
+  width: 10%;
+}
+
+.aot-group-row-header {
+  background-color: #343a4026;
+  font-weight: bold;
 }

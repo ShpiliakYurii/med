@@ -48,4 +48,9 @@ public class AttrGroupController {
         List<AttrGroup> attrGroups = attrGroupService.findAllByName(name);
         return new ResponseEntity<Object>(attrGroups, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") long id) throws NoSuchMethodException {
+        return new ResponseEntity<Object>(this.attrGroupService.getById(id), HttpStatus.OK);
+    }
 }

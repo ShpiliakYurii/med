@@ -32,4 +32,9 @@ public class AttrTypeDefController {
         List<AttrTypeDef> attrTypeDefs = attrTypeDefService.findAllByName(name);
         return new ResponseEntity<Object>(attrTypeDefs, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") long id) throws NoSuchMethodException {
+        return new ResponseEntity<Object>(this.attrTypeDefService.getById(id), HttpStatus.OK);
+    }
 }

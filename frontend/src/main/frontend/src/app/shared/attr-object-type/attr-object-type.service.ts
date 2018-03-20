@@ -30,4 +30,8 @@ export class AttrObjectTypeService {
     return this.http.delete(this.URL + "/" + attrId + "/" + objectTypeId);
   }
 
+  getByObjectType(otId: number, hierarchical: boolean): Observable<any> {
+    return this.http.get(this.URL + "/ot/" + otId + "/" + hierarchical);
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 
@@ -26,8 +26,11 @@ export class AttributesService {
     return result;
   }
 
-  remove(id: number) {
-    return this.http.delete(this.URL +"/"+ id);
+  remove(id: number): Observable<any> {
+    return this.http.delete(this.URL + "/" + id);
   }
 
+  getById(id: number): Observable<any> {
+    return this.http.get(this.URL + "/" + id);
+  }
 }

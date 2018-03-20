@@ -34,4 +34,8 @@ export class AttrGroupsService {
     return this.http.get(this.URL + "/by-name/" + name);
   }
 
+  getById(id: number): Observable<any>{
+    return this.http.get(this.URL + "/" + id);
+  }
+
 }
