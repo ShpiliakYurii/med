@@ -20,6 +20,12 @@ export class AttributesService {
     return result;
   }
 
+  addAndBind(attr: any, otId: number, options: number): Observable<any> {
+    let result: Observable<Object>;
+    result = this.http.put(this.URL + "/" + otId + "/" + options, attr);
+    return result;
+  }
+
   update(attr: any): Observable<any> {
     let result: Observable<Object>;
     result = this.http.post(this.URL, attr);

@@ -229,18 +229,25 @@ export class ConfigToolComponent implements OnInit {
     if (this.validateAttributeParameters()) {
       this.selectedAttribute.attrGroupId = this.selectedAttributeGroup.attrGroupId;
       this.selectedAttribute.attrTypeDefId = this.selectedAttrTypeDef.attrTypeDefId;
-      this.attributesService.add(this.selectedAttribute).subscribe(data => {
-        console.log(data);
+      //TODO change 0 to options calculating
+      this.attributesService.addAndBind(this.selectedAttribute, this.selectedObjectType.objectTypeId, 0).subscribe(data => {
         this.selectedAttribute = data;
-        this.attrObjectTypeService.add({
-          attrId: this.selectedAttribute.attrId,
-          objectTypeId: this.selectedObjectType.objectTypeId,
-          options: 0
-        }).subscribe(data => {
-          this.loadAOTS(this.selectedObjectType.objectTypeId);
-          console.log(data);
-        })
+        this.selectedAttribute.attrName = this.selectedAttribute.name;
+        this.aots[this.selectedAttributeGroup.name].push(this.selectedAttribute);
+        // this.loadAOTS(this.selectedObjectType.objectTypeId);
       });
+      // this.attributesService.add(this.selectedAttribute).subscribe(data => {
+      //   console.log(data);
+      //   this.selectedAttribute = data;
+      //   this.attrObjectTypeService.add({
+      //     attrId: this.selectedAttribute.attrId,
+      //     objectTypeId: this.selectedObjectType.objectTypeId,
+      //     options: 0
+      //   }).subscribe(data => {
+      //     this.loadAOTS(this.selectedObjectType.objectTypeId);
+      //     console.log(data);
+      //   })
+      // });
     } else {
       console.log("Fill parameters");
       console.log(this.selectedAttribute);
